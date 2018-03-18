@@ -46,11 +46,22 @@ fighters.map(x => $("#game").append(characterCard(x)));
 //start with character selection
 // then allow enemy selection and carry out attacks as well checks to see if either party hp goes down to 0
 // make state object
+let balanceFighterQ = () => {
+
+}
 
 $('.card').click(function(){
     if(!gameState.mainCharacter){
         gameState.mainCharacter = true;
+        $(this).addClass('mr-5')
         $("#fight-area").append($(this));
+        $('#messages-area').html(`<h2>Now pick your enemy</h2>`);
+        balanceFighterQ()
+    } else if (!gameState.enemy) {
+        gameState.enemy = true;
+        $('#fight-area').append($(this));
+        $('#messages-area').html(`<h2>Get ready to attack the enemy</h2>`);
+        balanceFighterQ();
     }
 })
 
