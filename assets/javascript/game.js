@@ -19,7 +19,7 @@ class Rapper {
 
 let characterCard = (x) => {
     let characterTemplate = `<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                <div class="card">
+                <div class="card border border-dark">
                     <img class="card-img-top" src="assets/images/${x.image}">
                     <div class="card-block">
                         <h5 class="text-bold">${x.name}</h5>
@@ -38,7 +38,7 @@ let projectPat = new Rapper("Project Pat", 100, 15, 15, "project_pat.jpg");
 
 let fighters = [mfDoom, bizzyBone, actionBronson, projectPat];
 
-fighters.map(x => $("#game").append(characterCard(x)));
+fighters.map(x => $("#fighter-area").append(characterCard(x)));
 
 //make an options object that will control global sound on/off and background change
 
@@ -47,7 +47,7 @@ fighters.map(x => $("#game").append(characterCard(x)));
 // then allow enemy selection and carry out attacks as well checks to see if either party hp goes down to 0
 // make state object
 let balanceFighterQ = () => {
-
+    
 }
 
 $('.card').click(function(){

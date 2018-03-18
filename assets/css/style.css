@@ -6,3 +6,15 @@ image {
 .card {
     width: 10rem;
 }
+
+body {
+    background-image: url('../images/background3.jpg')
+}
+
+h2 {
+    color: yellow;
+  -webkit-text-fill-color: yellow; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  font-size: 40px;
+}
