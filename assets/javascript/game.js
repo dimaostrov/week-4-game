@@ -17,15 +17,16 @@ class Rapper {
   
 }
 
-let charactedCard = (x) => {
-    let characterTemplate = `<div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="assets/images/${x.image}" alt="fighter info">
-        <div class="card-body">
-        <h5 class="card-title">${x.name}</h5>
-        <p class="card-text">${x.hp} HP</p>
-        <a href="#" class="btn btn-primary">Attack</a>
-        </div>
-        </div>`;
+let characterCard = (x) => {
+    let characterTemplate = `<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                <div class="card">
+                    <img class="card-img-top" src="assets/images/${x.image}">
+                    <div class="card-block">
+                        <h5 class="text-bold">${x.name}</h5>
+                        <p class="card-text">${x.hp} HP</p>
+                    </div>
+                </div>
+            </div>`;
     return characterTemplate;
   }
 
@@ -37,7 +38,7 @@ let projectPat = new Rapper("Project Pat", 100, 15, 15, "project_pat.jpg");
 
 let fighters = [mfDoom, bizzyBone, actionBronson, projectPat];
 
-fighters.map(x => $("#game").append(charactedCard(x)));
+fighters.map(x => $("#game").append(characterCard(x)));
 
 //make an options object that will control global sound on/off and background change
 
@@ -46,9 +47,18 @@ fighters.map(x => $("#game").append(charactedCard(x)));
 // then allow enemy selection and carry out attacks as well checks to see if either party hp goes down to 0
 // make state object
 
+$('.card').click(function(){
+    if(!gameState.mainCharacter){
+        gameState.mainCharacter = true;
+        $("#fight-area").append($(this));
+    }
+})
+
 let gameState = {
     mainCharacter: false,
     enemy: false,
     soundEffects: true,
-    
+    resetGame: () => {
+        gameState.mainCharacter = false;
+    }
 }
