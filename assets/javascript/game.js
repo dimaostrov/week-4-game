@@ -54,17 +54,29 @@ let updateDom = () => {
     $("#enemy-area").append(characterCard(enemy[0]))       
 }
 
+let movePlayer = (player, fromArray, toArray) => {
+    const index = fromArray.indexOf(player);
+    fromArray.splice(index, 1);
+    toArray.push(player)
+}
+
+let getPlayerName = (jqEl) => jqEl[0].innerText.trim().split('  ')[0].trim()
+
+var test;
 $('.card').click(function(){
     if(!gameState.mainCharacter){
         gameState.mainCharacter = true;
-        $("#fight-area").append($(this));
-        $('#message-area').html(`<h2>Now pick your enemy</h2>`);
+        // make function that will take element out of fighters array and append it to the player array.
+        test = $(this);
+        movePlayer(getPlayerName($(this)), fighters, playerOne)
         updateDom()
+        $('#message-area').html(`<h2>Now pick your enemy</h2>`);
     } else if (!gameState.enemy) {
         gameState.enemy = true;
-        $('#enemy').append($(this).append('<button class="btn" id="attack">attack</button>'));
-        $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
+        //movePlayer(getPlayerName($(this)), fighters, playerOne)
         updateDom()
+        // $('#enemy').append($(this).append('<button class="btn" id="attack">attack</button>')); dont forget to add an attack button to the enemy
+        $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
     }
 })
 
