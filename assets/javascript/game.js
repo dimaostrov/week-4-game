@@ -56,20 +56,34 @@ $('.card').click(function(){
         $(this).addClass('mr-5')
         $("#fight-area").append($(this));
         $('#messages-area').html(`<h2>Now pick your enemy</h2>`);
-        balanceFighterQ()
+        //balanceFighterQ()
     } else if (!gameState.enemy) {
         gameState.enemy = true;
-        $('#fight-area').append($(this));
+        $('#fight-area').append($(this).append('<button class="btn" id="attack">attack</button>'));
         $('#messages-area').html(`<h2>Get ready to attack the enemy</h2>`);
-        balanceFighterQ();
+        //balanceFighterQ();
     }
+})
+
+$('#attack').click(function(){
+    
 })
 
 let gameState = {
     mainCharacter: false,
     enemy: false,
     soundEffects: true,
+    wins: 0,
     resetGame: () => {
         gameState.mainCharacter = false;
+    },
+    enemyDefeat: () => {
+        gameState.enemy = false;
+        gameState.wins++ > 2 ? gameState.winGame : gameState.wins;
+    },
+    winGame: () => {
+        $("#messages-area").html('<h2>You have won</h2>')
     }
+
+
 }
