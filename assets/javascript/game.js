@@ -1,4 +1,5 @@
-// contstruct a player class
+let playerOne = [];
+let enemy = []
 class Rapper {
   constructor(name, hp, attack, counter, image) {
     this.name = name;
@@ -14,7 +15,6 @@ class Rapper {
     this.attackTimes++;
     this.updatedAttack = this.attack * this.attackTimes;
   }
-  
 }
 
 let characterCard = (x) => {
@@ -42,31 +42,34 @@ fighters.map(x => $("#fighter-area").append(characterCard(x)));
 
 //make an options object that will control global sound on/off and background change
 
-//make logic to play game
-//start with character selection
-// then allow enemy selection and carry out attacks as well checks to see if either party hp goes down to 0
-// make state object
-let balanceFighterQ = () => {
-    
+let updateDom = () => {
+    // make it traverse through fighters, playerOne, enemy arrays
+    // and render it to their respective dom elements
+    // before rendering them empty the dom nodes so when it gets re-rendered it will have updated info.
+    $('#fighter-area').empty()
+    fighters.map(x => $("#fighter-area").append(characterCard(x)));
+    $('#player-area').empty()
+    $("#player-area").append(characterCard(playerOne[0]))
+    $('#enemy-area').empty()
+    $("#enemy-area").append(characterCard(enemy[0]))       
 }
 
 $('.card').click(function(){
     if(!gameState.mainCharacter){
         gameState.mainCharacter = true;
-        $(this).addClass('mr-5')
         $("#fight-area").append($(this));
-        $('#messages-area').html(`<h2>Now pick your enemy</h2>`);
-        //balanceFighterQ()
+        $('#message-area').html(`<h2>Now pick your enemy</h2>`);
+        updateDom()
     } else if (!gameState.enemy) {
         gameState.enemy = true;
-        $('#fight-area').append($(this).append('<button class="btn" id="attack">attack</button>'));
-        $('#messages-area').html(`<h2>Get ready to attack the enemy</h2>`);
-        //balanceFighterQ();
+        $('#enemy').append($(this).append('<button class="btn" id="attack">attack</button>'));
+        $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
+        updateDom()
     }
 })
 
 $('#attack').click(function(){
-    
+
 })
 
 let gameState = {
@@ -82,7 +85,7 @@ let gameState = {
         gameState.wins++ > 2 ? gameState.winGame : gameState.wins;
     },
     winGame: () => {
-        $("#messages-area").html('<h2>You have won</h2>')
+        $("#message-area").html('<h2>You have won</h2>')
     }
 
 
