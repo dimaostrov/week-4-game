@@ -56,20 +56,24 @@ let updateDom = () => {
 }
 
 let movePlayer = (player, fromArray, toArray) => {
-    const index = fromArray.filter((x, i) => { if(x.name == getPlayerName(player)) i});
-    console.log(index)
+    let index = fromArray.map((x, i)=>{
+        if(x.name == getPlayerName(player)) return i
+    })
+    index = index.filter(x => Number.isInteger(x))
+    index = index[0]
     toArray.push(fromArray[index])
     fromArray.splice(index, 1);
 }
 
-let getPlayerName = (jqEl) => jqEl[0].innerText.trim().split('  ')[0].trim()
+let getPlayerName = (jqEl) => jqEl[0].innerText.trim().split('\n')[0]
 
 var test;
 $('.fighter').click(function(){
     if(!gameState.mainCharacter){
         gameState.mainCharacter = true;
         // make function that will take element out of fighters array and append it to the player array.
-        test = $(this);
+        //test = $(this);
+        //console.log(getPlayerName(test))
         movePlayer($(this), fighters, playerOne)
         updateDom()
         $('#message-area').html(`<h2>Now pick your enemy</h2>`);
@@ -104,19 +108,3 @@ let gameState = {
 
 
 }
-
-/*
-
-for(var i = 1; i<101;i++){
-    if(i % 15 == 0){
-        console.log('FizzBuzz')
-    } else if (i % 3 == 0){
-        console.log('Fizz') 
-    } else if (i % 5 == 0) {
-        console.log('Buzz')
-    } else {
-        console.log(i)
-    }
-}
-
-*/
