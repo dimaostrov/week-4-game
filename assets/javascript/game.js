@@ -51,8 +51,10 @@ let updateDom = () => {
     fighters.map(x => $("#fighter-area").append(characterCard(x)));
     $('#player-area').empty()
     $("#player-area").append(characterCard(playerOne[0]))
-    $('#enemy-area').empty()
-    $("#enemy-area").append(characterCard(enemy[0]))       
+    if(enemy != undefined && enemy.length != 0){
+        $('#enemy-area').empty()
+        $("#enemy-area").append(characterCard(enemy[0]))       
+    }
 }
 
 let movePlayer = (player, fromArray, toArray) => {
@@ -68,43 +70,47 @@ let movePlayer = (player, fromArray, toArray) => {
 let getPlayerName = (jqEl) => jqEl[0].innerText.trim().split('\n')[0]
 
 var test;
-$('.fighter').click(function(){
-    if(!gameState.mainCharacter){
-        gameState.mainCharacter = true;
-        // make function that will take element out of fighters array and append it to the player array.
-        //test = $(this);
-        //console.log(getPlayerName(test))
-        movePlayer($(this), fighters, playerOne)
-        updateDom()
-        $('#message-area').html(`<h2>Now pick your enemy</h2>`);
-    } else if (!gameState.enemy) {
-        gameState.enemy = true;
-        //movePlayer(getPlayerName($(this)), fighters, playerOne)
-        updateDom()
-        // $('#enemy').append($(this).append('<button class="btn" id="attack">attack</button>')); dont forget to add an attack button to the enemy
-        $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
+
+$(document).on('click', '.fighter', function(){
+        if(!gameState.mainCharacter){
+            gameState.mainCharacter = true;
+            // make function that will take element out of fighters array and append it to the player array.
+            movePlayer($(this), fighters, playerOne)
+            updateDom()
+            $('#message-area').html(`<h2>Now pick your enemy</h2>`);
+        } else if (!gameState.enemy && gameState.mainCharacter) {
+            console.log('clicked')
+            gameState.enemy = true;
+            movePlayer($(this), fighters, enemy)
+            updateDom()
+            // $('#enemy').append($(this).append('<button class="btn" id="attack">attack</button>')); dont forget to add an attack button to the enemy
+            $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
+        }
+    })
+    
+    //$('#enemy-area').append($('<button class="huy btn btn-danger">Huyaton</button>'))
+    //$('#enemy-area').append($('<button class="huy btn btn-info">Huyaton</button>'))
+        
+    $('#attack').click(function(){
+    
+    })
+    
+    let gameState = {
+        mainCharacter: false,
+        enemy: false,
+        soundEffects: true,
+        wins: 0,
+        resetGame: () => {
+            gameState.mainCharacter = false;
+        },
+        enemyDefeat: () => {
+            gameState.enemy = false;
+            gameState.wins++ > 2 ? gameState.winGame : gameState.wins;
+        },
+        winGame: () => {
+            $("#message-area").html('<h2>You have won</h2>')
+        }
+    
+    
     }
-})
 
-$('#attack').click(function(){
-
-})
-
-let gameState = {
-    mainCharacter: false,
-    enemy: false,
-    soundEffects: true,
-    wins: 0,
-    resetGame: () => {
-        gameState.mainCharacter = false;
-    },
-    enemyDefeat: () => {
-        gameState.enemy = false;
-        gameState.wins++ > 2 ? gameState.winGame : gameState.wins;
-    },
-    winGame: () => {
-        $("#message-area").html('<h2>You have won</h2>')
-    }
-
-
-}
