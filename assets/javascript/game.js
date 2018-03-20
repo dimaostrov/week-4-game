@@ -17,13 +17,16 @@ class Rapper {
   }
 }
 
-let characterCard = (x) => {
+let characterCard = (x, attack) => {
+    let attackBtn = '<button class="btn btn-danger" id="attack">Attack</button>'
     let characterTemplate = `<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                 <div class="card border border-dark fighter">
                     <img class="card-img-top" src="assets/images/${x.image}">
                     <div class="card-block">
                         <h5 class="text-bold">${x.name}</h5>
                         <p class="card-text">${x.hp} HP</p>
+                        ${attack ? attackBtn : '' }
+                        
                     </div>
                 </div>
             </div>`;
@@ -53,7 +56,7 @@ let updateDom = () => {
     $("#player-area").append(characterCard(playerOne[0]))
     if(enemy != undefined && enemy.length != 0){
         $('#enemy-area').empty()
-        $("#enemy-area").append(characterCard(enemy[0]))       
+        $("#enemy-area").append(characterCard(enemy[0], true))       
     }
 }
 
@@ -91,7 +94,7 @@ $(document).on('click', '.fighter', function(){
     //$('#enemy-area').append($('<button class="huy btn btn-danger">Huyaton</button>'))
     //$('#enemy-area').append($('<button class="huy btn btn-info">Huyaton</button>'))
         
-    $('#attack').click(function(){
+    $(document).on('click', '#attack', function(){
     
     })
     
