@@ -19,7 +19,7 @@ class Rapper {
 
 let characterCard = (x) => {
     let characterTemplate = `<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                <div class="card border border-dark">
+                <div class="card border border-dark fighter">
                     <img class="card-img-top" src="assets/images/${x.image}">
                     <div class="card-block">
                         <h5 class="text-bold">${x.name}</h5>
@@ -43,10 +43,11 @@ fighters.map(x => $("#fighter-area").append(characterCard(x)));
 //make an options object that will control global sound on/off and background change
 
 let updateDom = () => {
-    // make it traverse through fighters, playerOne, enemy arrays
+    // make it traverse through fighters, plOne, enemy arrays
     // and render it to their respective dom elements
     // before rendering them empty the dom nodes so when it gets re-rendered it will have updated info.
     $('#fighter-area').empty()
+    //fighters.map(x => console.log(x))
     fighters.map(x => $("#fighter-area").append(characterCard(x)));
     $('#player-area').empty()
     $("#player-area").append(characterCard(playerOne[0]))
@@ -55,20 +56,21 @@ let updateDom = () => {
 }
 
 let movePlayer = (player, fromArray, toArray) => {
-    const index = fromArray.indexOf(player);
+    const index = fromArray.filter((x, i) => { if(x.name == getPlayerName(player)) i});
+    console.log(index)
+    toArray.push(fromArray[index])
     fromArray.splice(index, 1);
-    toArray.push(player)
 }
 
 let getPlayerName = (jqEl) => jqEl[0].innerText.trim().split('  ')[0].trim()
 
 var test;
-$('.card').click(function(){
+$('.fighter').click(function(){
     if(!gameState.mainCharacter){
         gameState.mainCharacter = true;
         // make function that will take element out of fighters array and append it to the player array.
         test = $(this);
-        movePlayer(getPlayerName($(this)), fighters, playerOne)
+        movePlayer($(this), fighters, playerOne)
         updateDom()
         $('#message-area').html(`<h2>Now pick your enemy</h2>`);
     } else if (!gameState.enemy) {
@@ -102,3 +104,19 @@ let gameState = {
 
 
 }
+
+/*
+
+for(var i = 1; i<101;i++){
+    if(i % 15 == 0){
+        console.log('FizzBuzz')
+    } else if (i % 3 == 0){
+        console.log('Fizz') 
+    } else if (i % 5 == 0) {
+        console.log('Buzz')
+    } else {
+        console.log(i)
+    }
+}
+
+*/
