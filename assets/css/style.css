@@ -18,5 +18,5 @@ h2 {
   -webkit-text-fill-color: yellow; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
-  font-size: 40px;
+  font-size: 50px;
 }
