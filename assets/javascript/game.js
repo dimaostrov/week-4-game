@@ -93,6 +93,10 @@ $(document).on('click', '.fighter', function(){
             let enemyName = enemy.pop().name
             updateDom()
             $('#message-area').html(`<h2>You've killed ${enemyName}. Pick another enemy</h2>`)
+            gameState.wins++
+            if(gameState.wins == 3) {
+                $('#message-area').html(`<h2>You've won the game. </h2><button class="btn btn-info" id="restart">Restart</button>`)
+            }
             gameState.enemy = false;
         } else if(playerOne[0].hp <= 0){
             $('#message-area').html(`<h2>You died</h2><h2>Game Over</h2><button class="btn btn-info" id="restart">Restart</button>`)
@@ -110,13 +114,10 @@ $(document).on('click', '.fighter', function(){
         updateDom()
         isDead()
         $('#message-area').append(`<h2>Enemy dealt ${enemy[0].counter} damage</h2>`);
-        // add players attack, and subtract player counter attack
-
-
     })
 
     $(document).on('click', '#restart', function(){
-        // write restart function here
+        location.reload()
     })
     
     let gameState = {
