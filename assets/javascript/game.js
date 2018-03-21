@@ -141,4 +141,4 @@ let gameState = {
     }
 }
 
-if(!gameState.mainCharacter) $('#message-area').html(`<h2>Pick your enemy</h2>`) 
+if(!gameState.mainCharacter) $('#message-area').html(`<h2>Choose your player</h2>`) 

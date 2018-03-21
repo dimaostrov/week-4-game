@@ -15,8 +15,8 @@ body {
 
 h2 {
     color: yellow;
-  -webkit-text-fill-color: yellow; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
+  -webkit-text-fill-color: black; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: yellow;
   font-size: 50px;
 }
