@@ -7,11 +7,11 @@ class Rapper {
     this.attack = attack;
     this.counter = counter;
     this.attackTimes = 1;
-    this.updatedAttack;
+    this.updatedAttack = attack;
     this.isAttacking = false;
     this.image = image;
   }
-  attack() {
+  attackAdd() {
     this.attackTimes++;
     this.updatedAttack = this.attack * this.attackTimes;
   }
@@ -24,9 +24,7 @@ let characterCard = (x, attack) => {
                     <img class="card-img-top" src="assets/images/${x.image}">
                     <div class="card-block">
                         <h5 class="text-bold">${x.name}</h5>
-                        <p class="card-text">${x.hp} HP</p>
-                        ${attack ? attackBtn : '' }
-                        
+                        <p class="card-text">${x.hp} HP ${attack ? attackBtn : '' }</p>
                     </div>
                 </div>
             </div>`;
@@ -82,7 +80,6 @@ $(document).on('click', '.fighter', function(){
             updateDom()
             $('#message-area').html(`<h2>Now pick your enemy</h2>`);
         } else if (!gameState.enemy && gameState.mainCharacter) {
-            console.log('clicked')
             gameState.enemy = true;
             movePlayer($(this), fighters, enemy)
             updateDom()
@@ -90,12 +87,36 @@ $(document).on('click', '.fighter', function(){
             $('#message-area').html(`<h2>Get ready to attack the enemy</h2>`);
         }
     })
-    
-    //$('#enemy-area').append($('<button class="huy btn btn-danger">Huyaton</button>'))
-    //$('#enemy-area').append($('<button class="huy btn btn-info">Huyaton</button>'))
+
+    let isDead = () => {
+        if(enemy[0].hp <= 0){
+            let enemyName = enemy.pop().name
+            updateDom()
+            $('#message-area').html(`<h2>You've killed ${enemyName}. Pick another enemy</h2>`)
+            gameState.enemy = false;
+        } else if(playerOne[0].hp <= 0){
+            $('#message-area').html(`<h2>You died</h2><h2>Game Over</h2><button class="btn btn-info" id="restart">Restart</button>`)
+        }
+    }
         
     $(document).on('click', '#attack', function(){
-    
+        enemy[0].hp -= playerOne[0].updatedAttack
+        updateDom()
+        $('#message-area').html(`<h2>You've dealt ${playerOne[0].updatedAttack} damage</h2>`);
+        playerOne[0].attackAdd()
+        // check if enemy is dead otherwise
+        isDead()
+        playerOne[0].hp -= enemy[0].counter
+        updateDom()
+        isDead()
+        $('#message-area').append(`<h2>Enemy dealt ${enemy[0].counter} damage</h2>`);
+        // add players attack, and subtract player counter attack
+
+
+    })
+
+    $(document).on('click', '#restart', function(){
+        // write restart function here
     })
     
     let gameState = {
